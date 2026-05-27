@@ -1,6 +1,10 @@
 package com.arqueox.contasapp
 
 import android.Manifest
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -17,7 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.Locale
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -103,9 +107,9 @@ class MainActivity : AppCompatActivity() {
         val totalPago = despesas.filter { it.paga }.sumOf { it.valor }
         val totalPendente = total - totalPago
 
-        tvTotal.text = getString(R.string.total_label, total)
-        tvTotalPago.text = getString(R.string.pago_label, totalPago)
-        tvTotalPendente.text = getString(R.string.pendente_label, totalPendente)
+        tvTotal.text = "Total: €${String.format("%.2f", total)}"
+        tvTotalPago.text = "Pago: €${String.format("%.2f", totalPago)}"
+        tvTotalPendente.text = "Pendente: €${String.format("%.2f", totalPendente)}"
     }
 
     private fun mostrarDialogAdicionar() {
