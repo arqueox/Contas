@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Contas</string>
-    <string name="hint_valor1">Valor 1</string>
-    <string name="hint_valor2">Valor 2</string>
-    <string name="resultado_inicial">Resultado: --</string>
+    <string name="hint_nome">Nome da despesa</string>
+    <string name="hint_valor">Valor mensal</string>
+    <string name="hint_dia">Dia de vencimento</string>
 </resources>
