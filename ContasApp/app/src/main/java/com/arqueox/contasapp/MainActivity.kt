@@ -1,10 +1,6 @@
 package com.arqueox.contasapp
 
 import android.Manifest
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -21,7 +17,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import java.util.Calendar
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -67,7 +63,7 @@ class MainActivity : AppCompatActivity() {
         pedirPermissaoNotificacoes()
 
         // Agendar notificação diária
-        agendarNotificacaoDiaria()
+        NotificationHelper.agendarNotificacaoDiaria(this)
     }
 
     override fun onResume() {
@@ -107,9 +103,9 @@ class MainActivity : AppCompatActivity() {
         val totalPago = despesas.filter { it.paga }.sumOf { it.valor }
         val totalPendente = total - totalPago
 
-        tvTotal.text = "Total: €${String.format("%.2f", total)}"
-        tvTotalPago.text = "Pago: €${String.format("%.2f", totalPago)}"
-        tvTotalPendente.text = "Pendente: €${String.format("%.2f", totalPendente)}"
+        tvTotal.text = getString(R.string.total_label, total)
+        tvTotalPago.text = getString(R.string.pago_label, totalPago)
+        tvTotalPendente.text = getString(R.string.pendente_label, totalPendente)
     }
 
     private fun mostrarDialogAdicionar() {
@@ -180,31 +176,5 @@ class MainActivity : AppCompatActivity() {
                 )
             }
         }
-    }
-
-    private fun agendarNotificacaoDiaria() {
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(this, DespesaNotificationReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            this, 0, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        // Agendar para todos os dias às 9h da manhã
-        val calendar = Calendar.getInstance().apply {
-            set(Calendar.HOUR_OF_DAY, 9)
-            set(Calendar.MINUTE, 0)
-            set(Calendar.SECOND, 0)
-            if (before(Calendar.getInstance())) {
-                add(Calendar.DAY_OF_MONTH, 1)
-            }
-        }
-
-        alarmManager.setRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            pendingIntent
-        )
     }
 }

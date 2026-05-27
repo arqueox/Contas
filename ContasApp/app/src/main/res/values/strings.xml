@@ -3,4 +3,7 @@
     <string name="hint_nome">Nome da despesa</string>
     <string name="hint_valor">Valor mensal</string>
     <string name="hint_dia">Dia de vencimento</string>
+    <string name="total_label">Total: €%1$.2f</string>
+    <string name="pago_label">Pago: €%1$.2f</string>
+    <string name="pendente_label">Pendente: €%1$.2f</string>
 </resources>
